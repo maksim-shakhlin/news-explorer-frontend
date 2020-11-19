@@ -1,5 +1,5 @@
-import { useHistory } from 'react-router-dom';
-import { memo, useCallback } from 'react';
+import { memo } from 'react';
+import { Link } from 'react-router-dom';
 import EmailIcon from '../icons/EmailIcon';
 import GithubIcon from './../icons/GithubIcon';
 
@@ -9,21 +9,14 @@ const Footer = memo(() => {
   const year = new Date().getFullYear();
   const tag = year - 2020 ? `—${year}` : '';
 
-  const history = useHistory();
-
-  const toMain = useCallback(() => {
-    history.push('/');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [history]);
-
   return (
     <footer className="footer unit unit_flat app__unit app__footer">
       <div className="footer__links">
         <ul className="footer__text-links">
           <li className="footer__text-links-item">
-            <p className="footer__text-link footer__link" onClick={toMain}>
+            <Link to="/" className="footer__text-link footer__link">
               {UI.MAIN}
-            </p>
+            </Link>
           </li>
           <li className="footer__text-links-item">
             <a
