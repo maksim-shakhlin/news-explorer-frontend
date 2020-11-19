@@ -1,0 +1,124 @@
+.footer {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 80px;
+  box-sizing: border-box;
+
+  @media screen and (max-width: $bp-2) {
+    min-height: 64px;
+  }
+  @media screen and (max-width: $bp-2-2) {
+    flex-direction: column;
+    padding-top: 20px;
+    padding-bottom: 16px;
+  }
+
+  &__text {
+    margin: 0 20px 0 0;
+    font-size: 16px;
+    line-height: 22px;
+    color: $primary-pale-color;
+
+    @media screen and (max-width: $bp-2-2) {
+      margin-right: auto;
+    }
+  }
+
+  &__links {
+    display: flex;
+    align-items: center;
+
+    @media screen and (max-width: $bp-2-2) {
+      justify-content: space-between;
+      width: 100%;
+      margin-bottom: 24px;
+    }
+    @media screen and (max-width: $bp-3) {
+      align-items: flex-start;
+      margin-bottom: 40px;
+    }
+  }
+
+  &__link {
+    color: inherit;
+    text-decoration: none;
+    transition: opacity 0.15s ease;
+
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+
+  &__text-links {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    margin: 0 40px 0 auto;
+
+    @media screen and (max-width: $bp-2) {
+      margin: 0 20px 0 auto;
+    }
+    @media screen and (max-width: $bp-2-2) {
+      margin: 0 auto 0 0;
+    }
+    @media screen and (max-width: $bp-3) {
+      flex-direction: column;
+    }
+  }
+
+  &__text-links-item {
+    @media screen and (max-width: $bp-3) {
+      margin-bottom: 24px;
+    }
+
+    &:last-child {
+      @media screen and (max-width: $bp-3) {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  &__text-link {
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 24px;
+    padding: 0 16px;
+    box-sizing: border-box;
+    margin: 0;
+    cursor: pointer;
+
+    @media screen and (max-width: $bp-2) {
+      padding: 0 10px;
+    }
+    @media screen and (max-width: $bp-2-2) {
+      padding: 0;
+      margin-right: 20px;
+    }
+  }
+
+  $link-size: 24px;
+
+  &__icon-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template: $link-size / repeat(2, $link-size);
+    column-gap: $link-size;
+    font-size: 0;
+  }
+
+  &__icon-link {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  &__icon {
+    fill: $primary-color;
+    width: 100%;
+    height: 100%;
+  }
+}

@@ -1,0 +1,21 @@
+@import url(./vendor/normalize.css);
+@import url(./vendor/fonts/fonts.css);
+
+@import './blocks/variables';
+@import './blocks/unit';
+@import './blocks/title';
+
+@import './components/App/App';
+@import './components/NavBar/NavBar';
+@import './components/Header/Header';
+@import './components/Search/Search';
+@import './components/About/About';
+@import './components/Footer/Footer';
+@import './components/Main/Main';
+@import './components/SavedNews/SavedNews';
+@import './components/Cards/Cards';
+@import './components/Card/Card';
+@import './components/Preloader/Preloader';
+@import './components/Popup/Popup';
+@import './components/Form/Form';
+@import './components/Auth/Auth';

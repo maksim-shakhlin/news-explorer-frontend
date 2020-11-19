@@ -1,0 +1,142 @@
+.search {
+  background: url(../../images/header-background.jpg) center;
+  background-size: cover;
+  color: $main-color;
+
+  @media screen and (max-width: $bp-3) {
+    min-height: 536px;
+  }
+
+  &__main {
+    max-width: 608px;
+    box-sizing: content-box;
+    align-self: center;
+    justify-content: stretch;
+
+    @media screen and (max-width: $bp-2) {
+      max-width: 448px;
+      flex-grow: 1;
+      padding-top: 38px;
+      padding-bottom: 48px;
+    }
+    @media screen and (max-width: $bp-2-2) {
+      margin-top: 56px;
+    }
+    @media screen and (max-width: $bp-3) {
+      padding-top: 30px;
+      padding-bottom: 32px;
+    }
+  }
+
+  &__title {
+    font-family: 'Roboto Slab', Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    font-size: 60px;
+    line-height: 64px;
+    margin: 0 0 32px;
+
+    @media screen and (max-width: $bp-1) {
+      font-size: 48px;
+      line-height: 52px;
+      margin-bottom: 24px;
+    }
+
+    @media screen and (max-width: $bp-2) {
+      font-size: 36px;
+      line-height: 40px;
+      margin-bottom: 16px;
+      max-width: 385px;
+    }
+  }
+
+  &__subtitle {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 24px;
+    margin: 0 0 64px;
+
+    @media screen and (max-width: $bp-2) {
+      margin-bottom: 48px;
+    }
+  }
+
+  &__form {
+    display: flex;
+    border-radius: 50vh;
+    overflow: hidden;
+
+    @media screen and (max-width: $bp-3) {
+      margin-top: auto;
+      flex-direction: column;
+      overflow: unset;
+      border-radius: 0;
+    }
+
+    &:focus-within {
+      box-shadow: 0 0 3px 3px #000;
+
+      @media screen and (max-width: $bp-3) {
+        box-shadow: none;
+      }
+    }
+  }
+
+  &__input {
+    $intersection: 60px;
+    padding: 21px calc(40px + #{$intersection}) 21px 24px;
+    box-sizing: border-box;
+    margin-right: -$intersection;
+    flex-grow: 1;
+    background-color: $main-color;
+    border: none;
+    font-size: 16px;
+    line-height: 22px;
+
+    @media screen and (max-width: $bp-2) {
+      padding: 17px calc(20px + #{$intersection}) 17px 24px;
+    }
+    @media screen and (max-width: $bp-3) {
+      width: 100%;
+      border-radius: 50vh;
+      margin-bottom: 16px;
+
+      &:focus {
+        box-shadow: 0 0 3px 3px #000;
+      }
+    }
+
+    &:focus {
+      outline: none;
+      border: none;
+    }
+  }
+
+  &__button {
+    border: none;
+    background-color: $accent-color;
+    color: $main-color;
+    border-radius: 50vh;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 24px;
+    padding: 0 54px;
+    box-shadow: 0 5px 15px rgba($accent-deep-color, 0.2);
+    cursor: pointer;
+
+    @media screen and (max-width: $bp-2) {
+      padding: 0 50px;
+    }
+    @media screen and (max-width: $bp-3) {
+      min-height: 56px;
+    }
+
+    &:hover {
+      background-color: $accent-hover-color;
+      outline: none;
+    }
+
+    &:active {
+      background-color: $accent-active-color;
+    }
+  }
+}

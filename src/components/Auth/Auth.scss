@@ -1,0 +1,45 @@
+.auth {
+  padding: 34px 35px 28px;
+  box-sizing: border-box;
+  font-family: 'Inter', Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+
+  @media screen and (max-width: $bp-3) {
+    padding: 16px;
+  }
+
+  &_type_message {
+    padding: 43px 36px 51px;
+
+    @media screen and (max-width: $bp-3) {
+      padding: 16px;
+    }
+  }
+
+  &__bottom {
+    text-align: center;
+    margin: 16px 0 0;
+  }
+
+  &__link {
+    border: none;
+    background-color: inherit;
+    cursor: pointer;
+    color: $accent-color;
+    transition: color 0.15s ease;
+    padding: 0;
+    font-weight: 500;
+
+    &:hover,
+    &:focus {
+      color: $accent-hover-color;
+      outline: none;
+    }
+
+    &:active {
+      color: $accent-active-color;
+    }
+  }
+}

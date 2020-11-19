@@ -1,0 +1,103 @@
+.header {
+  box-sizing: border-box;
+  box-shadow: 0 -1px 0 0 $divider-color inset;
+  padding-top: 4px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: stretch;
+  transition: background-color 0.15s ease;
+
+  @media screen and (max-width: $bp-2-2) {
+    padding-top: 0;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: $main-color;
+  }
+
+  &_place_main {
+    box-shadow: 0 -1px 0 rgba($main-color, 0.2) inset;
+
+    @media screen and (max-width: $bp-2-2) {
+      &:not(.header_navbar-open) {
+        background-color: unset;
+      }
+      margin-bottom: -56px;
+    }
+  }
+
+  &_place_main.header_navbar-open {
+    background-color: $primary-color;
+  }
+
+  &__link {
+    font-size: 0;
+    display: flex;
+    padding-left: 32px;
+    margin-left: -32px;
+
+    @media screen and (max-width: $bp-2) {
+      padding-left: 40px;
+      margin-left: -40px;
+    }
+    @media screen and (max-width: $bp-2-2) {
+      padding-left: 24px;
+      margin-left: -24px;
+    }
+  }
+
+  &__logo {
+    align-self: center;
+    margin-right: 32px;
+    flex-shrink: 0;
+    height: 20px;
+    fill: $primary-color;
+
+    &_place_main {
+      fill: $main-color;
+    }
+
+    @media screen and (max-width: $bp-3) {
+      height: 16px;
+    }
+  }
+
+  &__navbar {
+    flex-shrink: 0;
+    margin-left: auto;
+  }
+
+  &__button {
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    border: none;
+    background: none;
+    margin: 16px 0 16px auto;
+    display: none;
+    font-size: 0;
+    cursor: pointer;
+    transition: opacity 0.15s ease;
+
+    &:focus {
+      outline: none;
+    }
+
+    &:hover {
+      opacity: 0.7;
+    }
+
+    @media screen and (max-width: $bp-2-2) {
+      display: block;
+    }
+  }
+
+  &__button-icon {
+    fill: $primary-color;
+
+    &_place_main {
+      fill: $main-color;
+    }
+  }
+}
