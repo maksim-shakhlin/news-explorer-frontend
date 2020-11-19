@@ -14,43 +14,72 @@ export function omit(object, skip) {
 }
 
 export function isOverflown(el) {
-  if (el.scrollWidth > el.clientWidth) {
-    return true;
-  }
-
-  const lineHeight = Number(getComputedStyle(el).lineHeight.split('px')[0]);
-
-  return (
-    Math.floor(el.scrollHeight / lineHeight) !==
-    Math.floor(el.clientHeight / lineHeight)
-  );
+  return el.scrollHeight > el.clientHeight || el.scrollWidth > el.clientWidth;
 }
 
-export function clamp(el, initialText, ending = '...') {
-  el.textContent = initialText;
+export function restore(el) {
+  el.style.display = '';
+  el.textContent = el.data;
+}
 
-  let flag = false;
-  let prev;
+export function trimLine(el, ending = '...') {
+  const lineHeight = Number(getComputedStyle(el).lineHeight.split('px')[0]);
+  const linesCountTarget = Math.floor(el.clientHeight / lineHeight) - 1;
 
-  while (isOverflown(el)) {
+  if (!linesCountTarget) {
+    el.textContent = '';
+    return true;
+  }
+  if (linesCountTarget < 0) {
+    el.style.display = 'none';
+    return false;
+  }
+
+  const desiredHeight = lineHeight * linesCountTarget;
+
+  while (el.clientHeight > desiredHeight) {
     if (el.textContent === ending) {
       el.textContent = '';
-      return;
+      return true;
     }
-    if (flag) {
-      el.textContent =
-        el.textContent.substring(0, el.textContent.length - ending.length - 1) +
-        ending;
-      continue;
-    }
-    prev = el.textContent;
+
     el.textContent = el.textContent.replace(
       /[\s!@#$%^&*()-_+=;:,./?\\|`~[\]{}<>"']*\s(\S)*$/,
       ending,
     );
-    if (el.textContent === prev) {
-      flag = true;
+  }
+
+  return true;
+}
+
+export function fitTextContent(el) {
+  const children = el.children;
+  if (!children.length) {
+    return;
+  }
+  let index = children.length - 1;
+
+  if (!children[0].data) {
+    for (const child of children) {
+      child.data = child.textContent;
     }
+  }
+
+  if (!isOverflown(el)) {
+    for (const child of children) {
+      restore(child);
+    }
+  }
+
+  let res = true;
+  while (isOverflown(el)) {
+    if (!res) {
+      index--;
+    }
+    if (index < 0) {
+      return;
+    }
+    res = trimLine(children[index]);
   }
 }
 

@@ -1,13 +1,6 @@
-import {
-  useRef,
-  memo,
-  useEffect,
-  useCallback,
-  useState,
-  useContext,
-} from 'react';
+import { useRef, memo, useEffect, useCallback, useContext } from 'react';
 
-import { getDateString, clamp, isOverflown } from '../../utils/utils';
+import { getDateString, fitTextContent, isOverflown } from '../../utils/utils';
 import { statuses } from '../../utils/constants';
 
 import BookmarkIcon from '../icons/BookmarkIcon';
@@ -20,7 +13,6 @@ import CurrentUserContext from '../../contexts/CurrentUserContext';
 
 const Card = memo(({ card, onAction, isFound = false }) => {
   card.saved = card.saved !== undefined ? card.saved : !!card._id;
-  const [isTextInvisible, setIsTextInvisible] = useState(false);
 
   const currentUser = useContext(CurrentUserContext);
 
@@ -29,8 +21,7 @@ const Card = memo(({ card, onAction, isFound = false }) => {
     onAction(card);
   }
 
-  const textRef = useRef(null);
-  const titleRef = useRef(null);
+  const textBlockRef = useRef(null);
   const buttonRef = useRef(null);
   const keywordRef = useRef(null);
   const tooltipRef = useRef(null);
@@ -38,10 +29,7 @@ const Card = memo(({ card, onAction, isFound = false }) => {
   const MIN_BETWEEN = 5;
 
   const fitText = useCallback(() => {
-    clamp(textRef.current, card.text);
-    setIsTextInvisible(!textRef.current.textContent);
-    clamp(titleRef.current, card.title);
-
+    fitTextContent(textBlockRef.current);
     if (keywordRef.current && tooltipRef.current) {
       if (
         tooltipRef.current.getBoundingClientRect().left -
@@ -53,13 +41,7 @@ const Card = memo(({ card, onAction, isFound = false }) => {
         keywordRef.current.classList.remove('card__top-item_type_overlapped');
       }
     }
-  }, [card.text, card.title]);
-
-  useEffect(() => {
-    if (isTextInvisible) {
-      clamp(titleRef.current, card.title);
-    }
-  }, [isTextInvisible, card.title]);
+  }, []);
 
   useEffect(() => {
     window.addEventListener('resize', fitText);
@@ -86,22 +68,10 @@ const Card = memo(({ card, onAction, isFound = false }) => {
       >
         <img alt={UI.IMG_ALT} src={card.image} className="card__pic" />
         <p className="card__date card__item">{getDateString(card.date)}</p>
-        <h3
-          className={classNames('card__title card__item', {
-            card__title_lonely: isTextInvisible,
-          })}
-          ref={titleRef}
-        >
-          {card.title}
-        </h3>
-        <p
-          className={classNames('card__text card__item', {
-            card__text_invisible: isTextInvisible,
-          })}
-          ref={textRef}
-        >
-          {card.text}
-        </p>
+        <div className="card__text-block" ref={textBlockRef}>
+          <h3 className="card__title card__item">{card.title}</h3>
+          <p className="card__text card__item">{card.text}</p>
+        </div>
         <p className="card__source card__item">{card.source}</p>
       </a>
       <div className="card__top-block">
