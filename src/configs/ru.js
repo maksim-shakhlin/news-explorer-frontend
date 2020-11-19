@@ -55,9 +55,6 @@ export const UI = {
   KEYWORDS_REMAINDER_TEMPLATE: '%remainder%-м другим',
   SEARCH_PLACEHOLDER: 'Введите тему новости',
   SEARCH_SUBMIT: 'Искать',
-  SEARCH_TITLE: 'Что творится в\xa0мире?',
-  SEARCH_SUBTITLE:
-    'Находите самые свежие статьи на\xa0любую тему и\xa0сохраняйте в\xa0своём личном\xa0кабинете.',
   LOGIN_TITLE: 'Вход',
   EMAIL_PLACEHOLDER: 'Введите почту',
   PASSWORD_PLACEHOLDER: 'Введите пароль',
@@ -71,4 +68,25 @@ export const UI = {
   DAY_BEFORE_YESTERDAY: 'позавчера',
   UNDEFINED: 'неизвестно',
   AND: ' и ',
+};
+
+// Texts
+
+export const CONTENT = {
+  ABOUT: [
+    <>
+      Привет! Я&nbsp;Максим Шахлин. Рекламный дизайнер в&nbsp;прошлом и
+      веб-разработчик в&nbsp;настоящем &#128522; Люблю хорошие интерфейсы и
+      адаптивно их&nbsp;верстаю: HTML, CSS, SASS. Затем превращаю их
+      в&nbsp;приложения с&nbsp;помощью JavaScript и&nbsp;React. Могу и&nbsp;бэк
+      запилить, на&nbsp;Express или&nbsp;Django.
+    </>,
+    <>
+      Разработке я&nbsp;научился в&nbsp;Яндекс.Практикуме. Рекомендую.
+      Этот&nbsp;сайт&nbsp;— моя дипломная работа. Всем&nbsp;REST&nbsp;API!
+    </>,
+  ],
+  SEARCH_TITLE: 'Что творится в\xa0мире?',
+  SEARCH_SUBTITLE:
+    'Находите самые свежие статьи на\xa0любую тему и\xa0сохраняйте в\xa0своём личном\xa0кабинете.',
 };

@@ -21,11 +21,7 @@ const Footer = memo(() => {
       <div className="footer__links">
         <ul className="footer__text-links">
           <li className="footer__text-links-item">
-            <p
-              to="/"
-              className="footer__text-link footer__link"
-              onClick={toMain}
-            >
+            <p className="footer__text-link footer__link" onClick={toMain}>
               {UI.MAIN}
             </p>
           </li>

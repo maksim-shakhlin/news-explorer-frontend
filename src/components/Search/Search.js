@@ -1,7 +1,7 @@
 import { memo, useCallback } from 'react';
 import Form from '../Form/Form';
 
-import { UI } from '../../configs/ru';
+import { UI, CONTENT } from '../../configs/ru';
 
 const classes = {
   form: 'search__form',
@@ -14,6 +14,7 @@ const content = [
     kind: 'input',
     name: 'keyword',
     type: 'text',
+    required: true,
     placeholder: UI.SEARCH_PLACEHOLDER,
     autoComplete: 'off',
     ref: true,
@@ -35,8 +36,8 @@ const Search = memo(({ onSearch, ...headerHandlers }) => {
   return (
     <section className="search unit unit_flat unit_full app__unit">
       <div className="search__main unit">
-        <h1 className="search__title">{UI.SEARCH_TITLE}</h1>
-        <p className="search__subtitle">{UI.SEARCH_SUBTITLE}</p>
+        <h1 className="search__title">{CONTENT.SEARCH_TITLE}</h1>
+        <p className="search__subtitle">{CONTENT.SEARCH_SUBTITLE}</p>
         <Form
           onSubmit={onSearch}
           classes={classes}

@@ -59,7 +59,11 @@ const Header = memo(({ isMain = false, onLogin, onLogout, onSignup }) => {
   const headerRef = useRef();
 
   const setBackgroundOpacity = useCallback(() => {
-    if (isNavBarOpen || headerRef.current.clientWidth > 680) {
+    if (
+      isNavBarOpen ||
+      headerRef.current.clientWidth > 680 ||
+      !headerRef.current.classList.contains('header_place_main')
+    ) {
       return;
     }
     const opacity = window.pageYOffset / 30;

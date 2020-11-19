@@ -191,7 +191,7 @@ const Form = memo(
             case 'submit':
               return (
                 <button
-                  {...omit(item, 'kind', 'text', 'sendingText')}
+                  {...omit(item, ['kind', 'text', 'sendingText'])}
                   key={`${name}_${item.kind}`}
                   type="submit"
                   disabled={isSending || (validate && !isValid)}

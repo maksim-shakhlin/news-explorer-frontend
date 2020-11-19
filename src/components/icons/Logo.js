@@ -7,8 +7,8 @@ const Logo = memo(({ className }) => {
       viewBox="0 0 137.012 19.925"
       shapeRendering="geometricPrecision"
       textRendering="geometricPrecision"
-      imagerrendering="optimizeQuality"
-      fillrrule="evenodd"
+      imageRendering="optimizeQuality"
+      fillRule="evenodd"
       clipRule="evenodd"
       className={className}
     >

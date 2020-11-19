@@ -18,10 +18,8 @@ export function isOverflown(el) {
     return true;
   }
 
-  if (el.scrollHeight < el.clientHeight) {
-    return false;
-  }
   const lineHeight = Number(getComputedStyle(el).lineHeight.split('px')[0]);
+
   return (
     Math.floor(el.scrollHeight / lineHeight) !==
     Math.floor(el.clientHeight / lineHeight)
@@ -41,7 +39,8 @@ export function clamp(el, initialText, ending = '...') {
     }
     if (flag) {
       el.textContent =
-        el.textContent.substring(0, el.textContent.length - 4) + ending;
+        el.textContent.substring(0, el.textContent.length - ending.length - 1) +
+        ending;
       continue;
     }
     prev = el.textContent;
