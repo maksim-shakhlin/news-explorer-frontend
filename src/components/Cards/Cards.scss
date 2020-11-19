@@ -1,0 +1,110 @@
+.cards {
+  background-color: $bg-secondary-color;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 64px;
+  transition: height 5s ease;
+
+  @media screen and (max-width: $bp-1) {
+    gap: 48px;
+  }
+  @media screen and (max-width: $bp-2) {
+    gap: 32px;
+  }
+  @media screen and (max-width: $bp-3) {
+    gap: 15px;
+  }
+
+  &_type_cap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+
+  &__list {
+    display: grid;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+
+    @media screen and (max-width: $bp-1) {
+      gap: 12px;
+      grid-template-columns: repeat(auto-fit, minmax(255px, 1fr));
+    }
+    @media screen and (max-width: $bp-2) {
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 8px;
+    }
+    @media screen and (max-width: $bp-3) {
+      gap: 9px;
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__button {
+    border: none;
+    background-color: $main-color;
+    border-radius: 50vh;
+    display: block;
+    justify-self: center;
+    padding: 20px 84px;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 24px;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+
+    @media screen and (max-width: $bp-2) {
+      padding: 16px 60px;
+    }
+    @media screen and (max-width: $bp-3) {
+      width: 100%;
+    }
+
+    &:hover,
+    &:focus {
+      outline: none;
+      background-color: $main-hover-color;
+    }
+  }
+
+  &__title {
+    font-family: 'Roboto Slab', Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    font-size: 26px;
+    line-height: 30px;
+    margin: 0 0 16px;
+    max-width: 356px;
+    text-align: center;
+  }
+
+  &__subtitle {
+    font-size: 18px;
+    line-height: 24px;
+    color: $primary-pale-color;
+    margin: 0;
+    max-width: 356px;
+    text-align: center;
+  }
+
+  &__icon {
+    fill: $primary-pale-color;
+    width: 96px;
+    height: 96px;
+    margin-bottom: 24px;
+  }
+
+  &__preloader {
+    margin-bottom: 24px;
+  }
+
+  @media screen and (max-width: $bp-3) {
+    &__main-title {
+      margin-bottom: 9px;
+    }
+  }
+}

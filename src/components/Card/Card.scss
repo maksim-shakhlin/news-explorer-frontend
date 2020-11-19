@@ -1,0 +1,304 @@
+.card {
+  $offset: 24px;
+  border-radius: 16px;
+  overflow: hidden;
+  background-color: $main-color;
+  height: 576px;
+  position: relative;
+
+  @media screen and (max-width: $bp-1) {
+    height: 500px;
+  }
+  @media screen and (max-width: $bp-2) {
+    height: 420px;
+  }
+  @media screen and (max-width: $bp-3) {
+    height: 430px;
+  }
+
+  &:hover,
+  &:focus-within {
+    box-shadow: 0 30px 24px -20px rgba($main-shadow-color, 0.1);
+  }
+
+  &__item {
+    margin-left: $offset;
+    margin-right: $offset;
+    flex-shrink: 0;
+
+    @media screen and (max-width: $bp-1) {
+      margin-left: 20px;
+      margin-right: 20px;
+    }
+    @media screen and (max-width: $bp-2) {
+      margin-left: 16px;
+      margin-right: 16px;
+    }
+  }
+
+  &__link {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  &__date {
+    color: $primary-pale-color;
+    font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
+    font-size: 18px;
+    line-height: 24px;
+    font-weight: 400;
+    margin-bottom: 12px;
+    margin-top: 20px;
+
+    @media screen and (max-width: $bp-3) {
+      margin-bottom: 10px;
+    }
+  }
+
+  &__pic {
+    height: 272px;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    // to distract from background if image bg is white
+    filter: brightness(0.95);
+    // in case of loading error
+    background-color: $main-hover-color;
+    text-align: center;
+    line-height: 272px;
+
+    @media screen and (max-width: $bp-1) {
+      height: 230px;
+      line-height: 230px;
+    }
+    @media screen and (max-width: $bp-2) {
+      height: 150px;
+      line-height: 150px;
+    }
+    @media screen and (max-width: $bp-3) {
+      height: 196px;
+      line-height: 196px;
+    }
+  }
+
+  $button-size: 40px;
+  $gap: 5px;
+  &__top-block {
+    position: absolute;
+    top: $offset;
+    left: $offset;
+    right: $offset;
+    display: grid;
+    gap: $gap;
+    grid-template-columns: 1fr $button-size;
+
+    @media screen and (max-width: $bp-1) {
+      top: 20px;
+      left: 20px;
+      right: 20px;
+    }
+    @media screen and (max-width: $bp-2) {
+      top: 8px;
+      left: 8px;
+      right: 8px;
+    }
+    @media screen and (max-width: $bp-3) {
+      top: 16px;
+      left: 16px;
+      right: 16px;
+    }
+  }
+
+  &__top-item {
+    background-color: $main-color;
+    border-radius: 10px;
+    padding: 8px 16px;
+    font-weight: 500;
+    margin: 0;
+    flex-shrink: 0;
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+
+    &_type {
+      &_keyword {
+        padding: 9px 16px 7px;
+        font-size: 14px;
+        line-height: 24px;
+        text-transform: capitalize;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        justify-self: start;
+        max-width: calc(100% - #{$gap} - #{$button-size});
+        transition: opacity 0.5s ease;
+        align-self: start;
+        cursor: default;
+      }
+
+      // use with filtering enabled
+      &_clickable-keyword {
+        padding: 9px 16px 7px;
+        font-size: 14px;
+        line-height: 24px;
+        text-transform: capitalize;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        justify-self: start;
+        max-width: calc(100% - #{$gap});
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.15s ease;
+        transition: opacity 0.5s ease;
+        align-self: start;
+
+        &:focus,
+        &:hover {
+          outline: none;
+          background-color: $main-hover-color;
+        }
+      }
+
+      &_tooltip {
+        visibility: hidden;
+        opacity: 0;
+        transition: visibility 0.5s linear 0s, opacity 0.5s ease;
+        justify-self: end;
+        box-shadow: 0 10px 22px rgba($main-shadow-color, 0.3);
+        z-index: 1;
+
+        @media screen and (max-width: $bp-2) {
+          display: none;
+        }
+      }
+
+      &_button:hover ~ &_tooltip {
+        visibility: visible;
+        opacity: 1;
+        transition: visibility 0s linear 0s, opacity 0.3s 0.3s ease;
+      }
+
+      @media screen and (min-width: $bp-2 + 1px) {
+        &_button:hover ~ &_overlapped {
+          opacity: 0.3;
+          transition: opacity 0.3s 0.3s ease;
+        }
+      }
+
+      &_delete-tooltip {
+        font-size: 12px;
+        line-height: 8px;
+        padding-top: 16px;
+        padding-bottom: 16px;
+      }
+
+      &_bookmark-tooltip {
+        font-size: 10px;
+        line-height: 7px;
+        padding-top: 16px;
+        padding-bottom: 17px;
+      }
+
+      &_button {
+        grid-column: 2 / 3;
+        border-radius: 8px;
+        border: none;
+        padding: 8px;
+        cursor: pointer;
+        font-size: 0;
+        align-self: start;
+
+        &:focus {
+          outline: none;
+        }
+      }
+    }
+  }
+
+  &__button-icon {
+    fill: $primary-pale-color;
+    transition: fill 0.15s ease;
+
+    &_saved {
+      fill: $accent-color;
+    }
+  }
+
+  &__top-item:hover > &__button-icon,
+  &__top-item:focus > &__button-icon {
+    fill: $primary-color;
+
+    &_saved {
+      fill: rgba($accent-color, 0.7);
+    }
+  }
+
+  &__source {
+    margin-bottom: $offset;
+    margin-top: auto;
+    font-family: 'Roboto Slab', Helvetica, Arial, sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    color: $primary-pale-color;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    @media screen and (max-width: $bp-1) {
+      margin-bottom: 20px;
+    }
+    @media screen and (max-width: $bp-2) {
+      margin-bottom: 16px;
+    }
+  }
+
+  &__title {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-family: 'Roboto Slab', Helvetica, Arial, sans-serif;
+    font-size: 26px;
+    line-height: 30px;
+    font-weight: 400;
+    overflow: hidden;
+    flex-shrink: 0;
+
+    @media screen and (max-width: $bp-2) {
+      font-size: 22px;
+      line-height: 24px;
+    }
+    @media screen and (max-width: $bp-3) {
+      line-height: 28px;
+    }
+  }
+
+  &__text {
+    margin-top: 16px;
+    margin-bottom: 0;
+    font-size: 16px;
+    line-height: 22px;
+    font-weight: 400;
+    flex-shrink: 0;
+
+    @media screen and (max-width: $bp-2) {
+      margin-top: 10px;
+    }
+  }
+
+  &__text-block {
+    overflow: hidden;
+    flex-shrink: 1;
+    margin-bottom: 10px;
+    @media screen and (max-width: $bp-2) {
+      margin-bottom: 12px;
+    }
+    @media screen and (max-width: $bp-3) {
+      margin-bottom: 8px;
+    }
+  }
+}
