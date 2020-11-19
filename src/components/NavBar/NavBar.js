@@ -9,7 +9,7 @@ import { statuses } from '../../utils/constants';
 import { UI } from '../../configs/ru';
 
 const NavBar = memo(
-  ({ items, isMain, extraClass = '', onClick, isMobile = false }) => {
+  ({ items, isMain, extraClass = '', onClick, isMobile = false, onTap }) => {
     const currentUser = useContext(CurrentUserContext);
 
     return (
@@ -24,6 +24,7 @@ const NavBar = memo(
             navbar_place_main: isMain,
           },
         )}
+        onClick={onTap ? onTap : () => {}}
       >
         <ul
           className={classNames('navbar__list', {

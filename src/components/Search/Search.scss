@@ -12,8 +12,10 @@
     box-sizing: content-box;
     align-self: center;
     justify-content: stretch;
+    margin-top: 80px;
 
     @media screen and (max-width: $bp-2) {
+      margin-top: 66px;
       max-width: 448px;
       flex-grow: 1;
       padding-top: 38px;

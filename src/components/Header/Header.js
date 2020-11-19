@@ -7,7 +7,6 @@ import {
   useEffect,
 } from 'react';
 import { Link } from 'react-router-dom';
-import { createPortal } from 'react-dom';
 import classNames from 'classnames';
 
 import CurrentUserContext from '../../contexts/CurrentUserContext';
@@ -22,8 +21,6 @@ import BurgerIcon from '../icons/BurgerIcon';
 import CloseIcon from '../icons/CloseIcon';
 
 import { UI } from '../../configs/ru';
-
-const rootEl = document.getElementById('root');
 
 const Header = memo(({ isMain = false, onLogin, onLogout, onSignup }) => {
   const currentUser = useContext(CurrentUserContext);
@@ -62,9 +59,12 @@ const Header = memo(({ isMain = false, onLogin, onLogout, onSignup }) => {
   const headerRef = useRef();
 
   const setBackgroundOpacity = useCallback(() => {
+    if (isNavBarOpen || headerRef.current.clientWidth > 680) {
+      return;
+    }
     const opacity = window.pageYOffset / 30;
     headerRef.current.style.backgroundColor = `rgba(26,27,34,${opacity})`;
-  }, []);
+  }, [isNavBarOpen]);
 
   useEffect(() => {
     if (isNavBarOpen) {
@@ -75,13 +75,15 @@ const Header = memo(({ isMain = false, onLogin, onLogout, onSignup }) => {
   }, [isNavBarOpen, setBackgroundOpacity]);
 
   useEffect(() => {
-    document.addEventListener('scroll', setBackgroundOpacity);
-    return () => {
-      document.removeEventListener('scroll', setBackgroundOpacity);
-    };
-  }, [setBackgroundOpacity]);
+    if (isMain) {
+      document.addEventListener('scroll', setBackgroundOpacity);
+      return () => {
+        document.removeEventListener('scroll', setBackgroundOpacity);
+      };
+    }
+  }, [setBackgroundOpacity, isMain]);
 
-  return createPortal(
+  return (
     <header
       className={classNames(
         'header unit unit_flat',
@@ -135,13 +137,17 @@ const Header = memo(({ isMain = false, onLogin, onLogout, onSignup }) => {
         nodeId="modal"
       >
         {isNavBarOpen ? (
-          <NavBar {...navBarProps} extraClass="" isMobile={true} />
+          <NavBar
+            {...navBarProps}
+            extraClass=""
+            isMobile={true}
+            onTap={handleClose}
+          />
         ) : (
           <Auth onSignup={onSignup} onLogin={onLogin} />
         )}
       </Popup>
-    </header>,
-    rootEl,
+    </header>
   );
 });
 

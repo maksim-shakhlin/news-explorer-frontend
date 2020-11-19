@@ -22,7 +22,7 @@ const SavedNews = memo(() => {
   const handleDelete = useCallback(() => {}, []);
 
   return (
-    <main className="app__unit">
+    <>
       <section className="saved unit">
         <h1 className="saved__text saved__title">{UI.SAVED_NEWS}</h1>
         <p className="title">
@@ -48,7 +48,7 @@ const SavedNews = memo(() => {
         status={status}
         extraClass="saved__cards"
       />
-    </main>
+    </>
   );
 });
 

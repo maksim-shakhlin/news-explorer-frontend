@@ -42,20 +42,18 @@ const Main = memo(({ onSave, ...headerHandlers }) => {
   return (
     <>
       <Search onSearch={handleSearch} {...headerHandlers} />
-      <main className="app__unit">
-        <Cards
-          isSearch={true}
-          onAction={handleSave}
-          status={searchStatus}
-          provider={searchHandler.provider()}
-          dataset={data}
-        >
-          <h2 className="title cards__main-title" ref={titleRef}>
-            {UI.SEARCH_RESULTS}
-          </h2>
-        </Cards>
-        <About />
-      </main>
+      <Cards
+        isSearch={true}
+        onAction={handleSave}
+        status={searchStatus}
+        provider={searchHandler.provider()}
+        dataset={data}
+      >
+        <h2 className="title cards__main-title" ref={titleRef}>
+          {UI.SEARCH_RESULTS}
+        </h2>
+      </Cards>
+      <About />
     </>
   );
 });

@@ -1,6 +1,5 @@
 import { memo, useCallback } from 'react';
 import Form from '../Form/Form';
-import Header from '../Header/Header';
 
 import { UI } from '../../configs/ru';
 
@@ -35,7 +34,6 @@ const Search = memo(({ onSearch, ...headerHandlers }) => {
 
   return (
     <section className="search unit unit_flat unit_full app__unit">
-      <Header isMain={true} {...headerHandlers} />
       <div className="search__main unit">
         <h1 className="search__title">{UI.SEARCH_TITLE}</h1>
         <p className="search__subtitle">{UI.SEARCH_SUBTITLE}</p>

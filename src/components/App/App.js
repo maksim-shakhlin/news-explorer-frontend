@@ -5,7 +5,6 @@ import Main from '../Main/Main';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import SavedNews from '../SavedNews/SavedNews';
-import Exclude from '../Exclude/Exclude';
 
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 
@@ -45,16 +44,23 @@ function App() {
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="app">
-        <Exclude path="/">
-          <Header {...authHandlers} />
-        </Exclude>
         <Switch>
           <Route exact path="/">
-            <Main onSave={handleBookmarkClick} {...authHandlers} />
+            <Header {...authHandlers} isMain={true} />
           </Route>
-          <Route exact path="/saved-news" component={SavedNews} />
-          <Route path="*" component={() => Redirect({ to: '/' })} />
+          <Route path="*">
+            <Header {...authHandlers} />
+          </Route>
         </Switch>
+        <main className="app__unit">
+          <Switch>
+            <Route exact path="/">
+              <Main onSave={handleBookmarkClick} {...authHandlers} />
+            </Route>
+            <Route exact path="/saved-news" component={SavedNews} />
+            <Route path="*" component={() => Redirect({ to: '/' })} />
+          </Switch>
+        </main>
         <Footer />
       </div>
     </CurrentUserContext.Provider>

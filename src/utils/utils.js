@@ -132,7 +132,7 @@ export function cleanSpaces(string) {
   return string.replace(/\s+/g, ' ').trim();
 }
 
-export function setFocus(ref, offset = 30) {
+export function setFocus(ref, offset = 80) {
   if (ref.current) {
     const pos = ref.current.offsetTop - offset;
     window.scrollTo({ top: pos, behavior: 'smooth' });
