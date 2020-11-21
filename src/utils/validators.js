@@ -1,5 +1,5 @@
 import { isEmail } from 'validator';
-import { ERRORS } from '../configs/ru';
+import { ERRORS } from '../locales/ru';
 import { cleanSpaces, fillTemplate } from './utils';
 
 export function validateLength(input) {
@@ -14,7 +14,7 @@ export function validateLength(input) {
 }
 
 export function validateEmail(input) {
-  if (!isEmail(input.value)) {
+  if (!isEmail(input.value.trim())) {
     return ERRORS.INVALID_EMAIL;
   }
 

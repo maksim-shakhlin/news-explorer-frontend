@@ -1,17 +1,15 @@
-import { memo } from 'react';
-import { useEffect, useRef, useMemo, createRef } from 'react';
+import { memo, useEffect, useRef, createRef, useMemo } from 'react';
 import classNames from 'classnames';
-import useForm from '../../hooks/useForm';
-import { omit, getInputs } from '../../utils/utils';
+
+import { omit } from '../../utils/utils';
 import Input from '../Input/Input';
-import { ERRORS_DICT } from '../../configs/ru';
 
 const inputOmit = ['kind', 'ref', 'extra'];
 
 const Form = memo(
   ({
     name,
-    error = '',
+    error,
     onSubmit,
     title = '',
     classes = {
@@ -25,21 +23,21 @@ const Form = memo(
       formError: 'form__error form__error_type_total',
     },
     content = [],
-    sendingClasses = {},
+    sendingClasses = { submit: 'form__button_sending' },
     errorClasses = {
       error: 'form__error_visible',
       input: 'form__input_invalid',
       submit: 'form__button_disabled',
     },
     extraClasses = {},
-    errorsDict = ERRORS_DICT,
     isSending = false,
     blurOnSubmit = true,
     validate = false,
-    state,
+    values,
+    errors,
+    isValid,
+    onChange,
   }) => {
-    const inputs = useMemo(() => getInputs(content), [content]);
-
     function getClasses(item) {
       return classNames(
         classes[item] || '',
@@ -51,37 +49,8 @@ const Form = memo(
       );
     }
 
-    function getValidators() {
-      const validators = {};
-
-      if (validate) {
-        inputs.forEach((input) => {
-          if (input.extra) {
-            validators[input.name] = input.extra.validator;
-          }
-        });
-      }
-      return validators;
-    }
-
-    const validators = useMemo(getValidators, [inputs, validate]);
-
-    const {
-      values,
-      handleChange,
-      errors,
-      isValid,
-      resetForm,
-    } = useForm(validate, { errorsDict, validators });
-
-    const focusedInput = createRef();
+    const focusedInput = useMemo(() => createRef(), []);
     const submit = useRef(null);
-
-    useEffect(() => {
-      if (state) {
-        resetForm(state);
-      }
-    }, [state, resetForm]);
 
     useEffect(() => {
       setTimeout(() => {
@@ -97,7 +66,7 @@ const Form = memo(
           }
         }
       }, 0);
-    }, [content, state, focusedInput]);
+    }, [content, focusedInput]);
 
     function handleSubmit(event) {
       event.preventDefault();
@@ -123,11 +92,7 @@ const Form = memo(
         noValidate
         onSubmit={handleSubmit}
       >
-        {!inputs.length && title ? (
-          <h2 className={getClasses('title')}>{title}</h2>
-        ) : (
-          ''
-        )}
+        {title ? <h2 className={getClasses('title')}>{title}</h2> : ''}
         {content.map((item) => {
           switch (item.kind) {
             case 'fieldset':
@@ -149,7 +114,7 @@ const Form = memo(
                       ref={(subitem.ref && focusedInput) || null}
                       value={values[subitem.name] || ''}
                       error={validate ? errors[subitem.name] : ''}
-                      onChange={handleChange}
+                      onChange={onChange}
                       validate={validate}
                       classes={{
                         input: getClasses('input'),
@@ -168,8 +133,9 @@ const Form = memo(
                   ref={(item.ref && focusedInput) || null}
                   value={values[item.name] || ''}
                   error={validate ? errors[item.name] : ''}
-                  onChange={handleChange}
+                  onChange={onChange}
                   validate={validate}
+                  disabled={isSending}
                   classes={{
                     input: getClasses('input'),
                     label: getClasses('label'),

@@ -122,6 +122,32 @@
       cursor: default;
     }
 
+    &_sending {
+      background: repeating-linear-gradient(
+          -45deg,
+          rgba($primary-color, 0.1),
+          rgba($primary-color, 0.1) 25%,
+          transparent 25%,
+          transparent 50%,
+          rgba($primary-color, 0.1) 50%,
+          rgba($primary-color, 0.1) 75%,
+          transparent 75%,
+          transparent
+        ),
+        linear-gradient($accent-color, $accent-color);
+      background-size: 20px 20px, 100%;
+      animation: moving 0.75s linear infinite;
+
+      @keyframes moving {
+        from {
+          background-position: 0 0, center;
+        }
+        to {
+          background-position: 20px 20px, center;
+        }
+      }
+    }
+
     &:hover:not(&_disabled):not(&_type_text),
     &:focus:not(&_disabled):not(&_type_text) {
       background-color: $accent-hover-color;

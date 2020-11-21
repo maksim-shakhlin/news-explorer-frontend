@@ -1,4 +1,4 @@
-import { memo, useContext } from 'react';
+import { memo, useContext, useCallback } from 'react';
 import { NavLink } from 'react-router-dom';
 import LogoutIcon from '../icons/LogoutIcon';
 
@@ -6,11 +6,15 @@ import classNames from 'classnames';
 
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 import { statuses } from '../../utils/constants';
-import { UI } from '../../configs/ru';
+import { UI } from '../../locales/ru';
 
 const NavBar = memo(
   ({ items, isMain, extraClass = '', onClick, isMobile = false, onTap }) => {
     const currentUser = useContext(CurrentUserContext);
+
+    const handleTap = useCallback(() => {
+      onTap && onTap();
+    }, [onTap]);
 
     return (
       <nav
@@ -24,7 +28,7 @@ const NavBar = memo(
             navbar_place_main: isMain,
           },
         )}
-        onClick={onTap ? onTap : () => {}}
+        onClick={handleTap}
       >
         <ul
           className={classNames('navbar__list', {

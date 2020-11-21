@@ -1,6 +1,5 @@
-import { LOCALE } from '../configs/config';
-import { MAX_NAME_CHARS_SHOWN } from '../configs/config';
-import { UI } from '../configs/ru';
+import { LOCALE, MAX_NAME_CHARS_SHOWN } from '../utils/constants';
+import { DICT, UI } from '../locales/ru';
 
 export function omit(object, skip) {
   const newObj = {};
@@ -17,12 +16,12 @@ export function isOverflown(el) {
   return el.scrollHeight > el.clientHeight || el.scrollWidth > el.clientWidth;
 }
 
-export function restore(el) {
+function restore(el) {
   el.style.display = '';
   el.textContent = el.data;
 }
 
-export function trimLine(el, ending = '...') {
+function trimLine(el, ending = '...') {
   const lineHeight = Number(getComputedStyle(el).lineHeight.split('px')[0]);
   const linesCountTarget = Math.floor(el.clientHeight / lineHeight) - 1;
 
@@ -83,13 +82,18 @@ export function fitTextContent(el) {
   }
 }
 
+function modulo(x, m) {
+  return ((x % m) + m) % m;
+}
+
 export function getDateString(dateISO8601) {
   const date = new Date(dateISO8601);
   const now = new Date();
   const daysDelta = parseInt((now - date) / (24 * 3600 * 1000));
 
-  if (daysDelta < 7) {
-    const realDelta = (now.getDay() - date.getDay()) % 7;
+  if (daysDelta < 3) {
+    const realDelta = modulo(now.getDay() - date.getDay(), 7);
+
     switch (realDelta) {
       case 0:
         return UI.TODAY;
@@ -98,7 +102,6 @@ export function getDateString(dateISO8601) {
       case 2:
         return UI.DAY_BEFORE_YESTERDAY;
       default:
-        return date.toLocaleString(LOCALE, { weekday: 'long' });
     }
   }
 
@@ -139,25 +142,30 @@ export function getInputs(content, inputs = [], all = false) {
   return inputs;
 }
 
-const hasOwnProperty = Object.prototype.hasOwnProperty;
+export function getValidators(content) {
+  const validators = {};
+  const inputs = getInputs(content);
 
-export function isEmpty(obj) {
-  if (!obj) return true;
+  inputs.forEach((input) => {
+    if (input.extra) {
+      validators[input.name] = input.extra.validator;
+    }
+  });
 
-  if (typeof obj !== 'object') return false;
-
-  if (obj.length > 0) return false;
-  if (obj.length === 0) return true;
-
-  for (var key in obj) {
-    if (hasOwnProperty.call(obj, key)) return false;
-  }
-
-  return true;
+  return validators;
 }
 
 export function cleanSpaces(string) {
   return string.replace(/\s+/g, ' ').trim();
+}
+
+export function clean(obj, keys) {
+  for (const key in obj) {
+    if (keys.includes(key)) {
+      obj[key] = cleanSpaces(obj[key]);
+    }
+  }
+  return obj;
 }
 
 export function setFocus(ref, offset = 80) {
@@ -167,20 +175,57 @@ export function setFocus(ref, offset = 80) {
   }
 }
 
-export function fillTemplate(template = '', fillers = {}) {
-  const vars = (template.match(/%\w+%/gi) || []).map(
-    (item) => item.split('%')[1],
-  );
-  const parts = template.split('%');
+export function plural(forms = [], n = 0) {
+  let i;
 
+  if (n % 10 === 1 && n % 100 !== 11) {
+    i = 0; // one
+  } else if (n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20)) {
+    i = 1; // few
+  } else {
+    i = 2; // many
+  }
+  return forms[i] || '';
+}
+
+export function fillTemplate(template = '', fillers = {}, dict = DICT) {
+  let isFiller = false;
+  let filler = '';
   let res = '';
 
-  parts.forEach((part) => {
-    if (vars.includes(part)) {
-      res += fillers[part] || UI.UNDEFINED;
+  for (let i = 0; i < template.length; i++) {
+    if (template[i] !== '%') {
+      if (isFiller) {
+        filler += template[i];
+      } else {
+        res += template[i];
+      }
     } else {
-      res += part;
+      if (isFiller) {
+        const split = filler.split('_');
+        if (split.length === 1) {
+          res +=
+            fillers[split[0]] === undefined
+              ? UI.UNDEFINED
+              : fillers[split[0]]
+              ? fillers[split[0]]
+              : UI.NONE;
+        } else {
+          res += plural(dict[split[1]], fillers[split[0]] || 0);
+        }
+
+        filler = '';
+        isFiller = false;
+      } else {
+        isFiller = true;
+      }
     }
-  });
+  }
+
   return res;
+}
+
+export function capitalize(string) {
+  if (!string) return '';
+  return string[0].toUpperCase() + string.slice(1);
 }

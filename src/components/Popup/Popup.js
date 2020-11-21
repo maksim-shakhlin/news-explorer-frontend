@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import CloseIcon from '../icons/CloseIcon';
 
 const Popup = memo(
-  ({ isOpen, extraClasses = {}, onClose, nodeId = 'root', children }) => {
+  ({ isOpen, extraClasses = {}, onClose, nodeId = 'modal', children }) => {
     const closeOnEscape = useCallback(
       (event) => {
         if (event.key === 'Escape') {
@@ -16,6 +16,7 @@ const Popup = memo(
     );
 
     const containerRef = useRef();
+    const popupRef = useRef();
 
     const closeIfEmpty = useCallback(() => {
       if (
@@ -43,36 +44,43 @@ const Popup = memo(
     useEffect(() => {
       if (isOpen) {
         document.addEventListener('keydown', closeOnEscape);
-
         return function removeListener() {
           document.removeEventListener('keydown', closeOnEscape);
         };
       }
-    });
+    }, [isOpen, closeOnEscape]);
 
-    if (!isOpen) {
-      return '';
-    }
+    // for animation to work, closed pupup is not in DOM
+    useEffect(() => {
+      if (isOpen) {
+        popupRef.current.classList.add('popup_opened');
+      }
+    }, [isOpen, children]);
 
     return createPortal(
-      <section
-        className={classNames('popup', { popup_opened: isOpen })}
-        onMouseDown={closeOnOverlayClick}
-      >
-        <div
-          className={classNames('popup__container', extraClasses.container)}
-          ref={containerRef}
+      isOpen ? (
+        <section
+          className="popup"
+          onMouseDown={closeOnOverlayClick}
+          ref={popupRef}
         >
-          {children}
-          <button
-            type="button"
-            className={classNames('popup__close-button', extraClasses.button)}
-            onClick={onClose}
+          <div
+            className={classNames('popup__container', extraClasses.container)}
+            ref={containerRef}
           >
-            <CloseIcon className="popup__icon" />
-          </button>
-        </div>
-      </section>,
+            {children}
+            <button
+              type="button"
+              className={classNames('popup__close-button', extraClasses.button)}
+              onClick={onClose}
+            >
+              <CloseIcon className="popup__icon" />
+            </button>
+          </div>
+        </section>
+      ) : (
+        ''
+      ),
       document.getElementById(nodeId),
     );
   },

@@ -1,37 +1,22 @@
-import { memo, useCallback } from 'react';
+import { memo, useCallback, useEffect } from 'react';
 import Form from '../Form/Form';
 
-import { UI, CONTENT } from '../../configs/ru';
+import { useForm } from '../../hooks/useForm';
+import { CONTENT } from '../../locales/ru';
+import search from './../../forms/search';
 
-const classes = {
-  form: 'search__form',
-  input: 'search__input',
-  submit: 'search__button',
-};
-
-const content = [
-  {
-    kind: 'input',
-    name: 'keyword',
-    type: 'text',
-    required: true,
-    placeholder: UI.SEARCH_PLACEHOLDER,
-    autoComplete: 'off',
-    ref: true,
-  },
-  {
-    kind: 'submit',
-    text: UI.SEARCH_SUBMIT,
-    tabIndex: -1,
-  },
-];
-
-const Search = memo(({ onSearch, ...headerHandlers }) => {
+const Search = memo(({ onSearch, keyword }) => {
   const stopFocus = useCallback((e) => {
     e.preventDefault();
   }, []);
 
-  content[1].onMouseDown = stopFocus;
+  const { values, handleChange, resetForm } = useForm();
+
+  search.content[1].onMouseDown = stopFocus;
+
+  useEffect(() => {
+    resetForm({ keyword });
+  }, [keyword, resetForm]);
 
   return (
     <section className="search unit unit_flat unit_full app__unit">
@@ -40,11 +25,9 @@ const Search = memo(({ onSearch, ...headerHandlers }) => {
         <p className="search__subtitle">{CONTENT.SEARCH_SUBTITLE}</p>
         <Form
           onSubmit={onSearch}
-          classes={classes}
-          content={content}
-          name="search"
-          // DEMO
-          state={{ keyword: 'демо' }}
+          {...search}
+          onChange={handleChange}
+          values={values}
         />
       </div>
     </section>

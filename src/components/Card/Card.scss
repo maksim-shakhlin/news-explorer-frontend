@@ -139,30 +139,6 @@
         cursor: default;
       }
 
-      // use with filtering enabled
-      &_clickable-keyword {
-        padding: 9px 16px 7px;
-        font-size: 14px;
-        line-height: 24px;
-        text-transform: capitalize;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        justify-self: start;
-        max-width: calc(100% - #{$gap});
-        border: none;
-        cursor: pointer;
-        transition: background-color 0.15s ease;
-        transition: opacity 0.5s ease;
-        align-self: start;
-
-        &:focus,
-        &:hover {
-          outline: none;
-          background-color: $main-hover-color;
-        }
-      }
-
       &_tooltip {
         visibility: hidden;
         opacity: 0;
@@ -171,7 +147,7 @@
         box-shadow: 0 10px 22px rgba($main-shadow-color, 0.3);
         z-index: 1;
 
-        @media screen and (max-width: $bp-2) {
+        @media screen and (max-width: $bp-1-2) {
           display: none;
         }
       }

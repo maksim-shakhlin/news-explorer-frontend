@@ -12,6 +12,7 @@
   background-color: rgba(0, 0, 0, 0.5);
   transition: visibility 0s linear 0.3s, opacity 0.3s ease;
   overflow: hidden;
+  z-index: 1;
 
   @media screen and (max-width: $bp-2-2) {
     top: 56px;
@@ -63,9 +64,10 @@
       overflow: hidden;
     }
 
-    &_for_auth {
+    &_solid {
       color: $primary-color;
       width: 100%;
+      box-sizing: border-box;
       max-width: 430px;
       background-color: $main-color;
       box-shadow: 0 0 25px rgba($main-color, 0.15);
@@ -75,6 +77,16 @@
         height: 100%;
         border-radius: 16px 16px 0 0;
         animation: rollup 0.3s ease-out;
+      }
+    }
+
+    &_for_prompt {
+      padding: 32px 24px 16px 32px;
+      display: flex;
+      flex-direction: column;
+
+      @media screen and (max-width: $bp-3) {
+        padding: 16px;
       }
     }
 

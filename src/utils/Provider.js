@@ -1,9 +1,10 @@
 export default class Provider {
-  constructor(increment = 10) {
+  constructor(increment = 10, onUpdate = () => {}) {
     this._data = [];
     this.increment = increment;
     this._give = 0;
     this._ref = 0;
+    this._onUpdate = onUpdate;
   }
 
   remained() {
@@ -26,6 +27,7 @@ export default class Provider {
 
     this._ref = this._give;
     this._give += Math.min(remained, increment);
+    this._onUpdate();
   }
 
   get() {
@@ -34,19 +36,25 @@ export default class Provider {
 
   add(data = []) {
     this._data.push(...data);
+    this._onUpdate();
   }
 
-  reset(data = [], increment = this.increment) {
+  reset(data = [], give, ref, increment = this.increment) {
     this._data = data;
     this.increment = increment;
-    this._give = 0;
-    this._ref = 0;
-    this.more();
+    if (!(give && ref)) {
+      this._give = 0;
+      this._ref = 0;
+      this.more();
+    } else {
+      this.setState(give, ref);
+    }
   }
 
   set(data = [], increment = this.increment) {
     this._data = data;
     this.increment = increment;
+    this._onUpdate();
   }
 
   ref() {
@@ -55,5 +63,29 @@ export default class Provider {
 
   all() {
     return this._data;
+  }
+
+  decrement() {
+    this._give = Math.max(0, this._give - 1);
+    if (!this._give) {
+      this.more();
+    } else {
+      this._onUpdate();
+    }
+  }
+
+  restart() {
+    this._give = 0;
+    this.more();
+  }
+
+  setState(give, ref) {
+    this._give = Math.min(give, this._data.length);
+    this._ref = Math.min(ref, this._give);
+    this._onUpdate();
+  }
+
+  setOnUpdate(onUpdate = () => {}) {
+    this._onUpdate = onUpdate;
   }
 }

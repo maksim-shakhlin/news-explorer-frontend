@@ -1,5 +1,5 @@
-import Provider from './Provider';
-import { SHOW_INCREMENT } from '../configs/config';
+import Provider from '../utils/Provider';
+import { SHOW_INCREMENT } from '../utils/constants';
 
 export default class Handler {
   constructor(increment = SHOW_INCREMENT) {
