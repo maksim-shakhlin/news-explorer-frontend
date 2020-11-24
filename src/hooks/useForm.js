@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import { ERRORS_DICT } from '../locales/ru';
 
 function getErrorMessage(input, errorsDict = {}) {
   const validity = input.validity;
@@ -31,7 +32,7 @@ function validate(input, validator) {
   return input.closest('form').checkValidity();
 }
 
-function useFormWithoutValidation() {
+export function useForm() {
   const [values, setValues] = useState({});
 
   const handleChange = (event) => {
@@ -41,16 +42,14 @@ function useFormWithoutValidation() {
     setValues({ ...values, [name]: value });
   };
 
-  const resetForm = useCallback((values) => {
-    if (values) {
-      setValues(values);
-    }
+  const resetForm = useCallback((values = {}) => {
+    setValues(values);
   }, []);
 
   return { values, handleChange, resetForm };
 }
 
-function useFormWithValidation(errorsDict = {}, validators = {}) {
+export function useValidatedForm(validators = {}, errorsDict = ERRORS_DICT) {
   const [values, setValues] = useState({});
   const [errors, setErrors] = useState({});
   const [isValid, setIsValid] = useState(false);
@@ -68,27 +67,19 @@ function useFormWithValidation(errorsDict = {}, validators = {}) {
   };
 
   const resetForm = useCallback(
-    ({ values, errors, isValid = false } = {}) => {
-      if (values) {
-        setValues(values);
-      }
+    (
+      { values = {}, errors = {}, isValid = false } = {
+        values: {},
+        errors: {},
+        isValid: false,
+      },
+    ) => {
+      setValues(values);
       setIsValid(isValid);
-      if (errors) {
-        setErrors(errors);
-      }
+      setErrors(errors);
     },
     [setValues, setErrors, setIsValid],
   );
 
   return { values, handleChange, errors, isValid, resetForm };
-}
-
-export default function useForm(validate = false, { errorsDict, validators }) {
-  const validated = useFormWithValidation(errorsDict, validators);
-  const simple = useFormWithoutValidation();
-
-  if (validate) {
-    return validated;
-  }
-  return simple;
 }

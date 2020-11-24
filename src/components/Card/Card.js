@@ -1,19 +1,18 @@
 import { useRef, memo, useEffect, useCallback, useContext } from 'react';
 
 import { getDateString, fitTextContent, isOverflown } from '../../utils/utils';
-import { statuses } from '../../utils/constants';
+import { statuses, MIN_BETWEEN } from '../../utils/constants';
+import fallbackImage from '../../images/fallback-image.svg';
 
 import BookmarkIcon from '../icons/BookmarkIcon';
 import TrashCanIcon from '../icons/TrashCanIcon';
 import classNames from 'classnames';
 
-import { UI } from '../../configs/ru';
+import { UI } from '../../locales/ru';
 
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 
 const Card = memo(({ card, onAction, isFound = false }) => {
-  card.saved = card.saved !== undefined ? card.saved : !!card._id;
-
   const currentUser = useContext(CurrentUserContext);
 
   function handleAction() {
@@ -25,8 +24,6 @@ const Card = memo(({ card, onAction, isFound = false }) => {
   const buttonRef = useRef(null);
   const keywordRef = useRef(null);
   const tooltipRef = useRef(null);
-
-  const MIN_BETWEEN = 5;
 
   const fitText = useCallback(() => {
     fitTextContent(textBlockRef.current);
@@ -66,7 +63,15 @@ const Card = memo(({ card, onAction, isFound = false }) => {
         rel="noreferrer"
         target="_blank"
       >
-        <img alt={UI.IMG_ALT} src={card.image} className="card__pic" />
+        <img
+          alt={UI.IMG_ALT}
+          src={card.image}
+          className="card__pic"
+          onError={(e) => {
+            e.target.onError = null;
+            e.target.src = fallbackImage;
+          }}
+        />
         <p className="card__date card__item">{getDateString(card.date)}</p>
         <div className="card__text-block" ref={textBlockRef}>
           <h3 className="card__title card__item">{card.title}</h3>
@@ -83,9 +88,9 @@ const Card = memo(({ card, onAction, isFound = false }) => {
           {isFound ? (
             <BookmarkIcon
               className={classNames('card__button-icon', {
-                'card__button-icon_saved': card.saved,
+                'card__button-icon_saved': card._id,
               })}
-              checked={card.saved}
+              checked={card._id}
             />
           ) : (
             <TrashCanIcon className="card__button-icon" />

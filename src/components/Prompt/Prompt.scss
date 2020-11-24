@@ -1,0 +1,66 @@
+.prompt {
+  &__title {
+    font-family: 'Roboto', Helvetica, Arial, sans-serif;
+    font-weight: 900;
+    font-size: 24px;
+    line-height: 28px;
+    margin: 0 0 32px;
+    display: block;
+    max-width: 315px;
+  }
+
+  &__buttons {
+    align-self: flex-end;
+  }
+
+  &__button {
+    padding: 8px 32px;
+    border: 2px solid $accent-color;
+    background-color: $main-color;
+    color: $accent-color;
+    border-radius: 50vh;
+    font-size: 16px;
+    line-height: 20px;
+    font-family: 'Roboto', Helvetica, Arial, sans-serif;
+    font-weight: 500;
+    text-align: center;
+    cursor: pointer;
+    margin-right: 16px;
+    display: inline-block;
+
+    &:last-child {
+      margin: 0;
+    }
+
+    &:hover,
+    &:focus {
+      border-color: $accent-hover-color;
+      color: $accent-hover-color;
+      box-shadow: 0 5px 15px rgba($accent-deep-color, 0.2);
+      outline: none;
+    }
+
+    &:active {
+      border-color: $accent-active-color;
+      color: $accent-active-color;
+    }
+
+    &_default {
+      background-color: $accent-color;
+      color: $main-color;
+      border-color: $accent-color;
+
+      &:hover,
+      &:focus {
+        border-color: $accent-hover-color;
+        background-color: $accent-hover-color;
+        color: $main-color;
+      }
+
+      &:active {
+        border-color: $accent-active-color;
+        background-color: $accent-active-color;
+      }
+    }
+  }
+}

@@ -7,7 +7,7 @@ import { setFocus } from '../../utils/utils';
 import useProvider from '../../hooks/useProvider';
 import classNames from 'classnames';
 
-import { UI } from '../../configs/ru';
+import { UI } from '../../locales/ru';
 
 const Cards = memo(
   ({
@@ -40,12 +40,7 @@ const Cards = memo(
                   key={card._id || card.link}
                   ref={i === ref() ? firstNewCardRef : null}
                 >
-                  <Card
-                    card={card}
-                    saved={card.saved} /* to force memo rerender */
-                    isFound={isSearch}
-                    onAction={onAction}
-                  />
+                  <Card card={card} isFound={isSearch} onAction={onAction} />
                 </li>
               );
             })}
@@ -89,9 +84,6 @@ const Cards = memo(
       case statuses.LOADING:
         icon = preloader;
         subtitle = UI.LOADING_SUBTITLE;
-        break;
-      case statuses.UPDATING:
-        icon = preloader;
         break;
 
       default:

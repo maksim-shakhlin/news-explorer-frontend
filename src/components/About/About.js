@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import maksim from '../../images/maksim.jpg';
-import { CONTENT } from '../../configs/ru';
+import { CONTENT } from '../../locales/ru';
 
 const About = memo(() => {
   return (

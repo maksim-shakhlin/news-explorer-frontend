@@ -1,19 +1,55 @@
-import { memo, useState, useCallback } from 'react';
+import { memo, useState, useCallback, useEffect } from 'react';
 import Form from '../Form/Form';
 import signup from '../../forms/signup';
 import login from '../../forms/login';
 import { modes } from '../../utils/constants';
+import { getValidators } from '../../utils/utils';
 import classNames from 'classnames';
 
-import { UI } from '../../configs/ru';
+import { useValidatedForm } from '../../hooks/useForm';
+
+import { UI } from '../../locales/ru';
 
 const texts = {
   [modes.LOGIN]: UI.SIGNUP,
   [modes.SIGNUP]: UI.LOGIN,
 };
+const validators = {
+  [modes.LOGIN]: getValidators(login.content),
+  [modes.SIGNUP]: getValidators(signup.content),
+};
 
 const Auth = memo(({ onLogin, onSignup }) => {
-  const [mode, setMode] = useState(modes.REGISTERED); // DEMO
+  const [mode, setMode] = useState(modes.LOGIN);
+  const [error, setError] = useState('');
+  const [isSending, setIsSending] = useState(false);
+
+  const { values, handleChange, errors, isValid, resetForm } = useValidatedForm(
+    validators[mode],
+  );
+
+  const handleLogin = useCallback(
+    (data) => {
+      setIsSending(true);
+      onLogin(data).catch((err) => {
+        setIsSending(false);
+        setError(err.message);
+      });
+    },
+    [onLogin],
+  );
+
+  const handleSignup = useCallback(
+    (data) => {
+      setIsSending(true);
+      setError('');
+      onSignup(data)
+        .then(setMode(modes.REGISTERED))
+        .catch((err) => setError(err.message))
+        .finally(() => setIsSending(false));
+    },
+    [onSignup],
+  );
 
   const switchMode = useCallback(() => {
     switch (mode) {
@@ -28,14 +64,18 @@ const Auth = memo(({ onLogin, onSignup }) => {
     }
   }, [mode]);
 
+  useEffect(() => {
+    resetForm();
+  }, [resetForm, mode]);
+
   const props = {
     [modes.LOGIN]: {
       ...login,
-      onSubmit: onLogin,
+      onSubmit: handleLogin,
     },
     [modes.SIGNUP]: {
       ...signup,
-      onSubmit: onSignup,
+      onSubmit: handleSignup,
     },
     [modes.REGISTERED]: {
       title: UI.SIGNUP_SUCCESS,
@@ -56,10 +96,17 @@ const Auth = memo(({ onLogin, onSignup }) => {
         auth_type_message: mode === modes.REGISTERED,
       })}
     >
-      <Form
-        {...props[mode]}
-        state={{ values: {}, errors: {}, isValid: false }}
-      />
+      {
+        <Form
+          {...props[mode]}
+          error={error}
+          values={values}
+          errors={errors}
+          isValid={isValid}
+          onChange={handleChange}
+          isSending={isSending}
+        />
+      }
       {texts[mode] && (
         <p className="auth__bottom">
           {UI.OR}{' '}

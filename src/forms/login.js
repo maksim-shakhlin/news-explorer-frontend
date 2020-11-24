@@ -1,11 +1,10 @@
-import { validateEmail } from '../utils/validators';
-import { PASSWORD_PATTERN } from '../configs/config';
-import { UI } from '../configs/ru';
+import { validateEmail, validateLength } from '../utils/validators';
+import { PASSWORD_PATTERN } from '../utils/constants';
+import { UI } from '../locales/ru';
 
 const login = {
   name: 'login',
   validate: true,
-  error: 'Ошибка для примера',
   content: [
     {
       kind: 'fieldset',
@@ -19,6 +18,7 @@ const login = {
           placeholder: UI.EMAIL_PLACEHOLDER,
           extra: { validator: validateEmail },
           label: UI.EMAIL_LABEL,
+          ref: true,
         },
         {
           name: 'password',
@@ -27,7 +27,8 @@ const login = {
           required: true,
           autoComplete: 'on',
           placeholder: UI.PASSWORD_PLACEHOLDER,
-          pattern: `^^\\s*${PASSWORD_PATTERN}\\s*$`,
+          pattern: `^\\s*${PASSWORD_PATTERN}\\s*$`,
+          extra: { validator: validateLength },
           label: UI.PASSWORD_LABEL,
         },
       ],

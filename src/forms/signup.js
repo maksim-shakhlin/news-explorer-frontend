@@ -1,12 +1,11 @@
 import { validateLength, validateEmail } from '../utils/validators';
-import { PASSWORD_PATTERN } from '../configs/config';
-import { NAME_PATTERN } from '../configs/ru';
-import { UI } from '../configs/ru';
+import { PASSWORD_PATTERN } from '../utils/constants';
+import { NAME_PATTERN } from '../locales/ru';
+import { UI } from '../locales/ru';
 
 const signup = {
   name: 'signup',
   validate: true,
-  error: 'Ошибка для примера',
   content: [
     {
       kind: 'fieldset',
@@ -20,6 +19,7 @@ const signup = {
           placeholder: UI.EMAIL_PLACEHOLDER,
           extra: { validator: validateEmail },
           label: UI.EMAIL_LABEL,
+          ref: true,
         },
         {
           name: 'password',

@@ -60,6 +60,7 @@
     padding: 9px 0;
     border-bottom: 1px solid $main-hover-color;
     transition: border-bottom-color 0.15s ease;
+    border-radius: 0;
 
     @media screen and (max-width: $bp-3) {
       padding-bottom: 6px;
@@ -120,6 +121,32 @@
       color: $primary-pale-color;
       box-shadow: none;
       cursor: default;
+    }
+
+    &_sending {
+      background: repeating-linear-gradient(
+          -45deg,
+          rgba($primary-color, 0.1),
+          rgba($primary-color, 0.1) 25%,
+          transparent 25%,
+          transparent 50%,
+          rgba($primary-color, 0.1) 50%,
+          rgba($primary-color, 0.1) 75%,
+          transparent 75%,
+          transparent
+        ),
+        linear-gradient($accent-color, $accent-color);
+      background-size: 20px 20px, 100%;
+      animation: moving 0.75s linear infinite;
+
+      @keyframes moving {
+        from {
+          background-position: 0 0, center;
+        }
+        to {
+          background-position: 20px 20px, center;
+        }
+      }
     }
 
     &:hover:not(&_disabled):not(&_type_text),

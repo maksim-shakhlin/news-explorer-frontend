@@ -1,51 +1,36 @@
-import { memo, useCallback, useState, useRef } from 'react';
+import { memo, useCallback, useRef, useEffect } from 'react';
 import About from '../About/About';
 import Search from '../Search/Search';
 import Cards from '../Cards/Cards';
 
-import searchHandler from '../../utils/searchHandler';
-import { statuses } from '../../utils/constants';
+import searchHandler from '../../handlers/searchHandler';
 import { setFocus } from '../../utils/utils';
 
-import { UI } from '../../configs/ru';
+import { UI } from '../../locales/ru';
 
-const Main = memo(({ onSave, ...headerHandlers }) => {
-  const [searchStatus, setSearchStatus] = useState(statuses.UNKNOWN);
-  const [data, setData] = useState([]);
-
+const Main = memo(({ onAction, onSearch, data, status, keyword, clear }) => {
   const titleRef = useRef();
 
-  const handleSearch = useCallback(({ keyword }) => {
-    setSearchStatus(statuses.SEARCHING);
-    searchHandler
-      .search(keyword) // possible errors handled in searchHandler
-      .then((res) => {
-        setData(searchHandler.data());
-        setSearchStatus(res);
-        setFocus(titleRef);
-      });
-  }, []);
-
-  const handleSave = useCallback(
-    (card) => {
-      onSave(card).then((savedCard) => {
-        if (!savedCard) {
-          return;
-        }
-        searchHandler.handle(savedCard);
-        setData(searchHandler.data());
+  const handleSearch = useCallback(
+    ({ keyword }) => {
+      onSearch(keyword).then((res) => {
+        if (res) setFocus(titleRef);
       });
     },
-    [onSave],
+    [onSearch],
   );
+
+  useEffect(() => {
+    return () => clear();
+  }, [clear]);
 
   return (
     <>
-      <Search onSearch={handleSearch} {...headerHandlers} />
+      <Search onSearch={handleSearch} keyword={keyword} />
       <Cards
         isSearch={true}
-        onAction={handleSave}
-        status={searchStatus}
+        onAction={onAction}
+        status={status}
         provider={searchHandler.provider()}
         dataset={data}
       >

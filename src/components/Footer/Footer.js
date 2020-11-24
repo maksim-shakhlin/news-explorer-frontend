@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import EmailIcon from '../icons/EmailIcon';
 import GithubIcon from './../icons/GithubIcon';
 
-import { UI } from '../../configs/ru';
+import { UI } from '../../locales/ru';
 
 const Footer = memo(() => {
   const year = new Date().getFullYear();

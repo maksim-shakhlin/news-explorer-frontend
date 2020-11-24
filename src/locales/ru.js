@@ -19,6 +19,12 @@ export const ERRORS_DICT = {
   },
 };
 
+export const DICT = {
+  saved: ['сохранённая', 'сохранённые', 'сохранённых'],
+  news: ['статья', 'статьи', 'статей'],
+  other: ['другому', 'другим', 'другим'],
+};
+
 // Errors
 
 export const ERRORS = {
@@ -35,7 +41,7 @@ export const UI = {
   AUTHORIZE: 'Авторизоваться',
   SIGNUP_SUCCESS: 'Пользователь успешно зарегистрирован!',
   OR: 'или',
-  IMG_ALT: 'Обложка новости',
+  IMG_ALT: 'Заглавная иллюстрация к новости',
   AUTH_TOOLTIP: 'Войдите, чтобы сохранять статьи',
   DEL_TOOLTIP: 'Убрать из сохранённых',
   SHOW_MORE: 'Показать ещё',
@@ -50,9 +56,9 @@ export const UI = {
   PRAKTIKUM: 'Яндекс.Практикум',
   SAVED_NEWS: 'Сохранённые статьи',
   SEARCH_RESULTS: 'Результаты поиска',
-  YOU_HAVE_TEMPLATE: '%name%, у вас %count% сохраненных статей',
+  YOU_HAVE_TEMPLATE: '%name%, у вас %count% %count_saved% %count_news%',
   ON_KEYWORDS: 'По ключевым словам: ',
-  KEYWORDS_REMAINDER_TEMPLATE: '%remainder%-м другим',
+  KEYWORDS_REMAINDER_TEMPLATE: '%remainder% %remainder_other%',
   SEARCH_PLACEHOLDER: 'Введите тему новости',
   SEARCH_SUBMIT: 'Искать',
   LOGIN_TITLE: 'Вход',
@@ -68,6 +74,13 @@ export const UI = {
   DAY_BEFORE_YESTERDAY: 'позавчера',
   UNDEFINED: 'неизвестно',
   AND: ' и ',
+  AUTHORIZATION_FAIL: 'Не удалось проверить авторизацию',
+  OK: 'OK',
+  NONE: 'нет',
+  LEAVE: 'Оставить',
+  DELETE: 'Удалить',
+  DELETE_TITLE: 'Удалить эту статью?',
+  KEYWORD_REQUIRED: 'Нужно ввести ключевое слово',
 };
 
 // Texts

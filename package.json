@@ -7,7 +7,6 @@
     "@testing-library/react": "11.1.1",
     "@testing-library/user-event": "12.2.0",
     "classnames": "2.2.6",
-    "ftellipsis": "0.2.3",
     "node-sass": "4.14.1",
     "react": "17.0.1",
     "react-dom": "17.0.1",
@@ -16,12 +15,13 @@
     "validator": "13.1.17",
     "web-vitals": "0.2.4"
   },
-  "homepage": "https://news.deque.ru",
+  "homepage": "https://news.deque.ru/",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "npm run build && ssh maks@212.109.194.119 rm -rf /home/maks/news-explorer-frontend/* && scp -r ./build/* maks@212.109.194.119:/home/maks/news-explorer-frontend"
   },
   "eslintConfig": {
     "extends": [
